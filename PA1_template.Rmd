@@ -11,7 +11,7 @@ csv$date<-as.Date(csv$date, format="%Y-%m-%d")
 
 ## What is mean total number of steps taken per day?
 
-```{r histogram total steps per day}
+```{r histogram total steps per day, message=FALSE}
 sumByDate<-aggregate(csv$steps,by=list(csv$date),sum)
 sumByDateNoNA<-na.omit(sumByDate)
 names(sumByDateNoNA)<-c("date","steps")
@@ -37,9 +37,9 @@ max<-avgStepsPerInterval[avgStepsPerInterval$steps==max(avgStepsPerInterval$step
 The Interval containing the maximum number of steps is `r max$interval`
 
 ## Imputing missing values
-### I will replace the mean for that 5-minute interval for the NAs
+### Strategy: I will replace the mean for that 5-minute interval for the NAs
 
-```{r imputed histogram}
+```{r imputed histogram, message=FALSE}
 totalNumberOfMissingRows<-nrow(csv)-nrow(csv[complete.cases(csv),])
 replaced<-csv
 for (i in 1:nrow(replaced)) {
@@ -57,6 +57,8 @@ replacedMean<-mean(replacedDataSumByDate$steps)
 replacedMedian<-median(replacedDataSumByDate$steps)
 ```
 
+Total number of missing rows is `r totalNumberOfMissingRows`
+
 The new mean is `r replacedMean`
 
 The new median is `r replacedMedian`
@@ -65,11 +67,13 @@ Imputing missing data did not change mean but changed median. Looking at the pre
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
-```{r weekday weekend plot}
+```{r load libs, include=FALSE, message=FALSE}
 install.packages("gridExtra", repos="http://cran.rstudio.com/")
 library(lattice)
 library(gridExtra)
+```
 
+```{r weekday weekend plot}
 # Introduce factor weekday or weekend
 replaced$type<-factor(ifelse((weekdays(replaced$date)=="Saturday" | weekdays(replaced$date)=="Sunday"), "weekend", "weekday"))
 

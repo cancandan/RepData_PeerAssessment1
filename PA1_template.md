@@ -20,10 +20,6 @@ names(sumByDateNoNA)<-c("date","steps")
 qplot(sumByDateNoNA$steps, data=sumByDateNoNA, xlab="Total Steps")
 ```
 
-```
-## stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust this.
-```
-
 ![plot of chunk histogram total steps per day](figure/histogram total steps per day.png) 
 
 ```r
@@ -70,16 +66,14 @@ names(replacedDataSumByDate)<-c("date","steps")
 qplot(replacedDataSumByDate$steps, data=replacedDataSumByDate, xlab="Total Steps")
 ```
 
-```
-## stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust this.
-```
-
 ![plot of chunk imputed histogram](figure/imputed histogram.png) 
 
 ```r
 replacedMean<-mean(replacedDataSumByDate$steps)
 replacedMedian<-median(replacedDataSumByDate$steps)
 ```
+
+Total number of missing rows is 2304
 
 The new mean is 1.0766 &times; 10<sup>4</sup>
 
@@ -90,24 +84,7 @@ Imputing missing data did not change mean but changed median. Looking at the pre
 ## Are there differences in activity patterns between weekdays and weekends?
 
 
-```r
-install.packages("gridExtra", repos="http://cran.rstudio.com/")
-```
 
-```
-## 
-## The downloaded binary packages are in
-## 	/var/folders/tf/m2dwrfvs1zn5jvr31dxrjyr40000gn/T//RtmpqihEJS/downloaded_packages
-```
-
-```r
-library(lattice)
-library(gridExtra)
-```
-
-```
-## Loading required package: grid
-```
 
 ```r
 # Introduce factor weekday or weekend
